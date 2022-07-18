@@ -1,6 +1,7 @@
 ﻿using BlazorShopOnline.Models.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShopOnline.Api.Extensions;
 using ShopOnline.Api.Repositories.Contracts;
 
 namespace ShopOnline.Api.Controllers
@@ -27,18 +28,20 @@ namespace ShopOnline.Api.Controllers
                 {
                     return NotFound();
                 }
-                // Merge products & categories
+                // Merge products & categories using extension method
                 else
                 {
+                    // call extension method "ConvertToDto"
+                    var productDtos = products.ConvertToDto(productCategories);
 
+                    return Ok(productDtos);
                 }
             }
             catch (Exception)
             {
-
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                                    "Error receiving data from Database");
             }
         }
-        
     }
 }
