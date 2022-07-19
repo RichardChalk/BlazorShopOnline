@@ -16,7 +16,7 @@ namespace ShopOnline.Api.Controllers
             _productRepository = productRepository;
         }
 
-        [HttpGet]
+        [HttpGet("Products")]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetItems()
         {
             try
